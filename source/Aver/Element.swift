@@ -1,68 +1,85 @@
 import Foundation
 
-struct Element<T> {
-    let key: String
+typealias Key = String
+
+protocol Keyed {
+    var key: Key { get }
+}
+
+protocol EasyEquatable {
+    var equality: String { get }
+}
+
+struct Tree<T> {
+    let key: Key
+    let value: T
+    let children: [Tree<T>]
+}
+
+struct Element<T>: EasyEquatable {
     let equality: String
-    let render: (_ ts: [T]) -> T
-    let children: [Element<T>]
+    let render: (_ values: [T]) -> T
     
-    init(
-        key: String = "1",
-        equality: String = "",
-        children: [Element<T>] = [],
-        render: @escaping (_ ts: [T]) -> T
-        ) {
-        self.key = key
+    init(equality: String = "", render: @escaping (_ values: [T]) -> T) {
         self.equality = equality
         self.render = render
-        self.children = children
     }
 }
 
-struct Value<T> {
-    let key: String
-    let value: T
-    let children: [Value<T>]
-}
-
 struct Mod<T> {
-    let path: [String]
-    let element: Element<T>
+    let path: [Key]
+    let value: T
 }
 
 extension Mod {
     func droppedPath() -> Mod {
-        return Mod(path: Array(path.dropFirst()), element: element)
+        return Mod(path: Array(path.dropFirst()), value: value)
     }
 }
 
-extension Element {
-    func withKey(key: String) -> Element {
-        return Element(key: key, equality: self.equality, children: self.children, render: self.render)
+extension Tree {
+    func withKey(key: Key) -> Tree {
+        return Tree(
+            key: key,
+            value: self.value,
+            children: self.children
+        )
     }
 }
 
-extension Element {
-    func with(children: [Element]) -> Element {
-        return Element(key: key, equality: equality, children: children, render: render)
+extension Tree {
+    func with(children: [Tree]) -> Tree {
+        return Tree(
+            key: key,
+            value: value,
+            children: children
+        )
     }
 }
 
 extension Array {
-    func incrKeys<T>() -> Array<AverLib.Element<T>> where Element == AverLib.Element<T> {
-        return enumerated().map { $0.element.withKey(key: "\($0.offset)") }
+    func incrKeys<T>() -> Array<Tree<T>> where Element == Tree<T> {
+        return enumerated().map {
+            $0.element.withKey(key: "\($0.offset)")
+        }
     }
 }
 
-typealias Key = String
 
 infix operator --
 
-func --<T>(
+func -- <T>(
     element: Element<T>,
-    children: [Element<T>]
-    ) -> Element<T> {
+    children: [() -> Tree<Element<T>>]
+    ) -> Tree<Element<T>> {
     
-    return element.with(children: children.incrKeys())
+    return from(element: element, children: children)
 }
 
+private func from<T>(
+    element: Element<T>,
+    children: [() -> Tree<Element<T>>]
+    ) -> Tree<Element<T>> {
+    
+    fatalError()
+}

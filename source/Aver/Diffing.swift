@@ -1,12 +1,8 @@
 import Foundation
 
-typealias DiffFunction<T> = (_ old: Element<T>, _ new: Element<T>) -> [Mod<T>]
+typealias DiffFunction<T: EasyEquatable> = (_ old: Tree<T>, _ new: Tree<T>) -> [Mod<T>]
 
-func diffStandard<T>(old: Element<T>, new: Element<T>) -> [Mod<T>] {
-    return diffStandard(old: old, new: new, path: [])
-}
-
-private func diffStandard<T>(old: Element<T>, new: Element<T>, path: [String]) -> [Mod<T>] {
+private func _diffStandard<T: EasyEquatable>(old: Tree<T>, new: Tree<T>, path: [Key]) -> [Mod<T>] {
     
     let oldKeys = old.children.map { $0.key }
     let newKeys = new.children.map { $0.key }
@@ -14,30 +10,39 @@ private func diffStandard<T>(old: Element<T>, new: Element<T>, path: [String]) -
     let added = new.children.filter { !oldKeys.contains($0.key) }
     let deleted = old.children.filter { !newKeys.contains($0.key) }
     
-    let entityChanged = old.equality != new.equality
+    let entityChanged = old.value.equality != new.value.equality
     let childrenAmountChanged = !added.isEmpty || !deleted.isEmpty
     
     var childrenEqualityChanged = false
     
     for new in new.children {
         if let old = old.children.first(where: { $0.key == new.key }) {
-            if old.equality != new.equality {
+            if old.value.equality != new.value.equality {
                 childrenEqualityChanged = true
             }
         }
     }
     
     if entityChanged || childrenAmountChanged || childrenEqualityChanged {
-        return [Mod(path: path, element: new)]
+        return [Mod(path: path, value: new.value)]
     }
     
     var mods = [Mod<T>]()
     
     for new in new.children {
         if let old = old.children.first(where: { $0.key == new.key }) {
-            mods.append(contentsOf: diffStandard(old: old, new: new, path: [new.key] + path))
+            mods.append(contentsOf: _diffStandard(old: old, new: new, path: [new.key] + path))
         }
     }
     
     return mods
 }
+
+struct Diffing<T: EasyEquatable> {
+    
+    var standard: DiffFunction<T> = { old, new in
+        return _diffStandard(old: old, new: new, path: [])
+    }
+}
+
+
