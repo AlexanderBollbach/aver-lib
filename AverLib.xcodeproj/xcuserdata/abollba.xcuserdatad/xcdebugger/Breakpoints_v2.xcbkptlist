@@ -9,14 +9,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "source/AppDelegate.swift"
-            timestampString = "577737802.9330831"
+            filePath = "source/Aver/Tree.swift"
+            timestampString = "577821918.908134"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "test()"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "childUpdated(at:fn:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AverLib.Tree.childUpdated(at: Swift.String, fn: (AverLib.Tree&lt;A&gt;) -&gt; AverLib.Tree&lt;A&gt;) -&gt; AverLib.Tree&lt;A&gt;"
+                  moduleName = "AverLib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abollba/Dropbox/all/iOS/frameworks/aver-lib/source/Aver/Tree.swift"
+                  timestampString = "577821918.914294"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "237">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (AverLib.Tree&lt;A&gt;) -&gt; AverLib.Tree&lt;A&gt; in AverLib.Tree.childUpdated(at: Swift.String, fn: (AverLib.Tree&lt;A&gt;) -&gt; AverLib.Tree&lt;A&gt;) -&gt; AverLib.Tree&lt;A&gt;"
+                  moduleName = "AverLib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abollba/Dropbox/all/iOS/frameworks/aver-lib/source/Aver/Tree.swift"
+                  timestampString = "577821918.9165111"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "45">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

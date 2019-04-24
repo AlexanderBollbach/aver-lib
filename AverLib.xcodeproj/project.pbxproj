@@ -14,7 +14,21 @@
 		29A677542266EAA900FC55F1 /* Diffing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294E1348225DB25F000301AA /* Diffing.swift */; };
 		29A677552266EAA900FC55F1 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294E134A225DB26C000301AA /* Element.swift */; };
 		29A71FF8225840E000728B77 /* FilteringStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A71FF7225840E000728B77 /* FilteringStuff.swift */; };
+		2F5C0FF02270B2B900B538BE /* DiffingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C0FEF2270B2B900B538BE /* DiffingTests.swift */; };
+		2F5C0FF82270B77900B538BE /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C0FF72270B77900B538BE /* Tree.swift */; };
+		2F5C0FFA2270B79900B538BE /* Ergonomics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C0FF92270B79900B538BE /* Ergonomics.swift */; };
+		2F5C0FFC2270BEC800B538BE /* ResolvingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C0FFB2270BEC800B538BE /* ResolvingTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F5C0FF22270B2B900B538BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2984399B224EF802001ED9BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 298439A2224EF802001ED9BA;
+			remoteInfo = AverLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		294E1346225DB244000301AA /* Resolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolving.swift; sourceTree = "<group>"; };
@@ -26,10 +40,23 @@
 		298439B2224EF805001ED9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29A6774D2266CF4200FC55F1 /* Aver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aver.swift; sourceTree = "<group>"; };
 		29A71FF7225840E000728B77 /* FilteringStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringStuff.swift; sourceTree = "<group>"; };
+		2F5C0FED2270B2B800B538BE /* AverLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AverLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F5C0FEF2270B2B900B538BE /* DiffingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffingTests.swift; sourceTree = "<group>"; };
+		2F5C0FF12270B2B900B538BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F5C0FF72270B77900B538BE /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		2F5C0FF92270B79900B538BE /* Ergonomics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ergonomics.swift; sourceTree = "<group>"; };
+		2F5C0FFB2270BEC800B538BE /* ResolvingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolvingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		298439A0224EF802001ED9BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F5C0FEA2270B2B800B538BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				298439A5224EF802001ED9BA /* source */,
+				2F5C0FEE2270B2B900B538BE /* AverLibTests */,
 				298439A4224EF802001ED9BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				298439A3224EF802001ED9BA /* AverLib.app */,
+				2F5C0FED2270B2B800B538BE /* AverLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,8 +103,20 @@
 				294E1346225DB244000301AA /* Resolving.swift */,
 				294E1348225DB25F000301AA /* Diffing.swift */,
 				294E134A225DB26C000301AA /* Element.swift */,
+				2F5C0FF72270B77900B538BE /* Tree.swift */,
+				2F5C0FF92270B79900B538BE /* Ergonomics.swift */,
 			);
 			path = Aver;
+			sourceTree = "<group>";
+		};
+		2F5C0FEE2270B2B900B538BE /* AverLibTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F5C0FEF2270B2B900B538BE /* DiffingTests.swift */,
+				2F5C0FFB2270BEC800B538BE /* ResolvingTests.swift */,
+				2F5C0FF12270B2B900B538BE /* Info.plist */,
+			);
+			path = AverLibTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,6 +139,24 @@
 			productReference = 298439A3224EF802001ED9BA /* AverLib.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2F5C0FEC2270B2B800B538BE /* AverLibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F5C0FF62270B2B900B538BE /* Build configuration list for PBXNativeTarget "AverLibTests" */;
+			buildPhases = (
+				2F5C0FE92270B2B800B538BE /* Sources */,
+				2F5C0FEA2270B2B800B538BE /* Frameworks */,
+				2F5C0FEB2270B2B800B538BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2F5C0FF32270B2B900B538BE /* PBXTargetDependency */,
+			);
+			name = AverLibTests;
+			productName = AverLibTests;
+			productReference = 2F5C0FED2270B2B800B538BE /* AverLibTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -110,6 +169,10 @@
 				TargetAttributes = {
 					298439A2224EF802001ED9BA = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					2F5C0FEC2270B2B800B538BE = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 298439A2224EF802001ED9BA;
 					};
 				};
 			};
@@ -127,12 +190,20 @@
 			projectRoot = "";
 			targets = (
 				298439A2224EF802001ED9BA /* AverLib */,
+				2F5C0FEC2270B2B800B538BE /* AverLibTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		298439A1224EF802001ED9BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F5C0FEB2270B2B800B538BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -151,12 +222,31 @@
 				294E134D225DB27E000301AA /* MarkDown.swift in Sources */,
 				29A71FF8225840E000728B77 /* FilteringStuff.swift in Sources */,
 				29A677522266EAA900FC55F1 /* Aver.swift in Sources */,
+				2F5C0FF82270B77900B538BE /* Tree.swift in Sources */,
 				29A677552266EAA900FC55F1 /* Element.swift in Sources */,
 				29A677532266EAA900FC55F1 /* Resolving.swift in Sources */,
+				2F5C0FFA2270B79900B538BE /* Ergonomics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F5C0FE92270B2B800B538BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F5C0FF02270B2B900B538BE /* DiffingTests.swift in Sources */,
+				2F5C0FFC2270BEC800B538BE /* ResolvingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2F5C0FF32270B2B900B538BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 298439A2224EF802001ED9BA /* AverLib */;
+			targetProxy = 2F5C0FF22270B2B900B538BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		298439B3224EF805001ED9BA /* Debug */ = {
@@ -309,6 +399,46 @@
 			};
 			name = Release;
 		};
+		2F5C0FF42270B2B900B538BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4VJT9264H8;
+				INFOPLIST_FILE = AverLibTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = foo.bar.baz.quz.AverLibTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AverLib.app/AverLib";
+			};
+			name = Debug;
+		};
+		2F5C0FF52270B2B900B538BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4VJT9264H8;
+				INFOPLIST_FILE = AverLibTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = foo.bar.baz.quz.AverLibTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AverLib.app/AverLib";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -326,6 +456,15 @@
 			buildConfigurations = (
 				298439B6224EF805001ED9BA /* Debug */,
 				298439B7224EF805001ED9BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F5C0FF62270B2B900B538BE /* Build configuration list for PBXNativeTarget "AverLibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F5C0FF42270B2B900B538BE /* Debug */,
+				2F5C0FF52270B2B900B538BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
