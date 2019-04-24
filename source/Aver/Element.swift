@@ -65,12 +65,18 @@ extension Array {
     }
 }
 
+postfix operator -
+
+postfix func - <T>(element: Element<T>) -> Tree<Element<T>> {
+    return Tree(key: "1", value: element, children: [])
+}
+
 
 infix operator --
 
 func -- <T>(
     element: Element<T>,
-    children: [() -> Tree<Element<T>>]
+    children: [Tree<Element<T>>]
     ) -> Tree<Element<T>> {
     
     return from(element: element, children: children)
@@ -78,7 +84,7 @@ func -- <T>(
 
 private func from<T>(
     element: Element<T>,
-    children: [() -> Tree<Element<T>>]
+    children: [Tree<Element<T>>]
     ) -> Tree<Element<T>> {
     
     fatalError()

@@ -18,22 +18,11 @@ func doc() -> Element<String> {
 
 func doc1() -> Tree<Element<String>> {
     return doc() -- [
-        text("2"),
+        text("2")-,
         list() -- [
-            text("list text 1"),
-            text("list text 2")
+            text("list text 1")-,
+            text("list text 2")-
         ]
     ]
 }
 
-
-
-//
-//func doc2() -> Element<String> {
-//    return doc() -- [
-//        list() -- [
-//            text("1"),
-//            text("3")
-//        ]
-//    ]
-//}
