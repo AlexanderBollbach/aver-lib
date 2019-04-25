@@ -8,6 +8,9 @@ func resolveStandard<T>(tree: Tree<T>, mods: [TreeMod<T>]) -> Tree<T> {
 
 extension Tree {
     func updated(with mod: TreeMod<T>) -> Tree {
+        if mod.path.isEmpty {
+            return mod.tree
+        }
         if mod.path.count > 1 {
             return Tree(
                 key: self.key,

@@ -64,3 +64,19 @@ extension TreeMod {
 protocol Keyed {
     var key: Key { get }
 }
+
+extension Tree: DebugLoggable where T: DebugLoggable {
+    var debugLog: String {
+        return "\(key) - \(value.debugLog)"
+    }
+}
+
+extension Tree where T: DebugLoggable {
+    func log(depth: Int = 0) {
+        let spacing = String(Array<Character>.init(repeating: " ", count: depth * 4))
+        print(spacing + self.debugLog)
+        for c in children {
+            c.log(depth: depth + 1)
+        }
+    }
+}
