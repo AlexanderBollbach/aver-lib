@@ -15,7 +15,8 @@ class Aver<T> {
     
     func render(_ e: Tree<Element<T>>) -> T {
         element = _resolve(e)
-        return element!.render()
+//        return element!.render()
+        fatalError()
     }
     
     private func _resolve(_ e: Tree<Element<T>>) -> Tree<Element<T>> {

@@ -11,10 +11,10 @@ protocol DebugLoggable {
 struct Element<T>: EasyEquatable {
     let name: String
     let equality: String
-    let render: (_ values: [T]) -> T
     var cache: T?
+    let render: (_ values: [T]) -> T
     
-    init(name: String, equality: String = "", render: @escaping (_ values: [T]) -> T, cache: T? = nil) {
+    init(name: String, equality: String = "", cache: T? = nil, render: @escaping (_ values: [T]) -> T) {
         self.name = name
         self.equality = equality
         self.render = render
@@ -28,4 +28,9 @@ extension Element: DebugLoggable {
     }
 }
 
+extension Element {
+    func rendered(values: [T]) -> Element {
+        return Element(name: name, equality: equality, cache: self.render(values), render: self.render)
+    }
+}
 

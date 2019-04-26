@@ -92,6 +92,6 @@ extension Tree {
 extension Element {
     
     func rendered(with values: [T]) -> Element {
-        return Element(name: name, equality: equality, render: render, cache: render(values))
+        return Element(name: name, equality: equality, cache: render(values), render: render)
     }
 }

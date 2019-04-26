@@ -2,33 +2,45 @@ import Foundation
 
 typealias ResolveFunction<T> = (_ tree: Tree<T>, _ mods: [TreeMod<T>]) -> Tree<T>
 
-func resolveStandard<T>(tree: Tree<T>, mods: [TreeMod<T>]) -> Tree<T> {
-    return mods.reduce(tree, { $0.updated(with: $1) })
-}
+//extension Tree {
+//    func updated<U>(with mod: TreeMod<T>) -> Tree where T == Element<U> {
+//
+//        // special case.  we didn't descend in the differ.  should this even be handled here?
+//        if mod.path.isEmpty {
+//            return mod.tree
+//        }
+//
+//
+//        if mod.path.count > 1 {
+//            return Tree(
+//                key: self.key,
+//                value: self.value,
+//                children: children.map { $0.key == mod.path.first! ? $0.updated(with: mod.droppedPath()) : $0 }
+//            )
+//        } else {
+//            return childUpdated(at: mod.path.first!, fn: { _ in mod.tree })
+//        }
+//    }
+//}
 
-extension Tree {
-    func updated(with mod: TreeMod<T>) -> Tree {
-        
-        // special case.  we didn't descend in the differ.  should this even be handled here?
-        if mod.path.isEmpty {
-            return mod.tree
+struct Resolving<T> {
+    var standard: ResolveFunction<Element<T>> = { tree, mods in
+        var tree = tree
+        for mod in mods {
+            tree = updated(tree: tree, mod: mod)
         }
-        
-        
-        if mod.path.count > 1 {
-            return Tree(
-                key: self.key,
-                value: self.value,
-                children: children.map { $0.key == mod.path.first! ? $0.updated(with: mod.droppedPath()) : $0 }
-            )
-        } else {
-            return childUpdated(at: mod.path.first!, fn: { _ in mod.tree })
-        }
+        return tree
     }
 }
 
-struct Resolving<T: EasyEquatable> {
-    var standard: ResolveFunction<T> = { tree, mods in
-        return resolveStandard(tree: tree, mods: mods)
+
+func updated<T>(tree: Tree<Element<T>>, mod: TreeMod<Element<T>>) -> Tree<Element<T>> {
+    
+    if mod.path.count == 1 {
+        return Tree(key: tree.key, value: tree.value.rendered(with: []), children: tree.children)
     }
+    
+    let cs = tree.children.map { mod.path.first! == $0.key ? updated(tree: tree, mod: mod.droppedPath()) : $0 }
+ 
+    return Tree(key: tree.key, value: tree.value, children: tree.children)
 }
