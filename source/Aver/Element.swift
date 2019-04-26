@@ -12,11 +12,13 @@ struct Element<T>: EasyEquatable {
     let name: String
     let equality: String
     let render: (_ values: [T]) -> T
+    var cache: T?
     
-    init(name: String, equality: String = "", render: @escaping (_ values: [T]) -> T) {
+    init(name: String, equality: String = "", render: @escaping (_ values: [T]) -> T, cache: T? = nil) {
         self.name = name
         self.equality = equality
         self.render = render
+        self.cache = cache
     }
 }
 

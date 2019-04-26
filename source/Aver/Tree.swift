@@ -80,3 +80,18 @@ extension Tree where T: DebugLoggable {
         }
     }
 }
+
+extension Tree {
+
+    func render<U>() -> Element<U> where T == Element<U> {
+        
+        return self.value
+    }
+}
+
+extension Element {
+    
+    func rendered(with values: [T]) -> Element {
+        return Element(name: name, equality: equality, render: render, cache: render(values))
+    }
+}

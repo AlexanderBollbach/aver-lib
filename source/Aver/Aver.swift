@@ -1,31 +1,29 @@
-class Aver<T: EasyEquatable> {
+class Aver<T> {
     
-    let diff: DiffFunction<T>
-    let resolve: ResolveFunction<T>
+    let diff: DiffFunction<Element<T>>
+    let resolve: ResolveFunction<Element<T>>
     
     private var element: Tree<Element<T>>?
-    private var value: Tree<T>?
     
-    init(p
-        diff: @escaping DiffFunction<T> = Diffing<T>().standard,
-        resolve: @escaping ResolveFunction<T> = Resolving<T>().standard
+    init(
+        diff: @escaping DiffFunction<Element<T>> = Diffing().standard,
+        resolve: @escaping ResolveFunction<Element<T>> = Resolving().standard
         ) {
         self.diff = diff
         self.resolve = resolve
     }
     
-    func render(_ e: Element<T>) -> T {
-        resolveNewValue(e)
-        return value!.value
+    func render(_ e: Tree<Element<T>>) -> T {
+        element = _resolve(e)
+        return element!.render()
     }
     
-    private func resolveNewValue(_ e: Element<T>) {
-//        if let currentElement = self.element, let currentValue = self.value {
-//            value = resolve(currentValue, diff(currentElement, e))
-//        } else {
-//            element = e
-//            value = Value.fromElement(e)
-//        }
+    private func _resolve(_ e: Tree<Element<T>>) -> Tree<Element<T>> {
+        if let currentElement = self.element {
+            return resolve(currentElement, diff(currentElement, e))
+        } else {
+            return e
+        }
     }
 }
 
