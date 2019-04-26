@@ -66,26 +66,26 @@ protocol Keyed {
 }
 
 extension Tree: DebugLoggable where T: DebugLoggable {
+    
     var debugLog: String {
-        return "\(key) - \(value.debugLog)"
+        return log()
     }
-}
-
-extension Tree where T: DebugLoggable {
-    func log(depth: Int = 0) {
-        let spacing = String(Array<Character>.init(repeating: " ", count: depth * 4))
-        print(spacing + self.debugLog)
+    
+    func log(depth: Int = 0) -> String {
+        let spacing = String(repeating: " ", count: depth * 4)
+        var s = spacing + "\(key) - \(value.debugLog)"
         for c in children {
-            c.log(depth: depth + 1)
+            s = s + c.log(depth: depth + 1)
         }
+        return s
     }
 }
 
 extension Tree {
 
-    func render<U>() -> Element<U> where T == Element<U> {
-        
-        return self.value
+    mutating func render<U>() where T == Element<U> {
+        let cs: [Tree] = children.map { var a = $0 ; a.render() ; return a }
+        self = Tree(key: key, value: value.rendered(with: cs.map { $0.value.cache! }), children: cs)
     }
 }
 

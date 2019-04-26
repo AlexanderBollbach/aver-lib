@@ -24,13 +24,17 @@ struct Element<T>: EasyEquatable {
 
 extension Element: DebugLoggable {
     var debugLog: String {
-        return name
+        return "\(name) \(cache != nil ? "(CACHED)" : "")"
     }
 }
 
 extension Element {
     func rendered(values: [T]) -> Element {
         return Element(name: name, equality: equality, cache: self.render(values), render: self.render)
+    }
+    
+    func clearedCache() -> Element {
+        return Element(name: name, equality: equality, cache: nil, render: render)
     }
 }
 
