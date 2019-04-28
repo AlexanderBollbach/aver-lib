@@ -4,22 +4,23 @@ typealias ResolveFunction<T> = (_ tree: Tree<T>, _ mods: [TreeMod<T>]) -> Tree<T
 
 extension Tree {
     func updated<U>(with mod: TreeMod<T>) -> Tree where T == Element<U> {
-
-        // special case.  we didn't descend in the differ.  should this even be handled here?
-        if mod.path.isEmpty {
-            return mod.tree
-        }
-
-
-        if mod.path.count > 1 {
+        if !mod.path.isEmpty {
             return Tree(
                 key: self.key,
                 value: self.value.clearedCache(),
                 children: children.map { $0.key == mod.path.first! ? $0.updated(with: mod.droppedPath()) : $0 }
             )
         } else {
-            return childUpdated(at: mod.path.first!, fn: { _ in mod.tree })
+            return updated(with: mod.value, added: mod.added, removed: mod.removed)
         }
+    }
+    func updated<U>(with value: T, added: [Tree], removed: [Key]) -> Tree where T == Element<U> {
+        
+        var cs = children.filter { !removed.contains($0.key) }
+        cs.append(contentsOf: added)
+    
+        return Tree(key: key, value: value, children: cs)
+        
     }
 }
 

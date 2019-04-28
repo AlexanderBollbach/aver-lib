@@ -1,7 +1,5 @@
 import Foundation
 
-typealias Key = String
-
 struct Tree<T> {
     let key: Key
     let value: T
@@ -15,23 +13,8 @@ extension Tree: Equatable where T: EasyEquatable {
 }
 
 extension Tree {
-    func withKey(key: Key) -> Tree {
-        return Tree(
-            key: key,
-            value: self.value,
-            children: self.children
-        )
-    }
-}
-
-extension Tree {
-    func with(children: [Tree]) -> Tree {
-        return Tree(
-            key: key,
-            value: value,
-            children: children
-        )
-    }
+    func withKey(key: Key) -> Tree { return Tree(key: key, value: value, children: children) }
+    func with(children: [Tree]) -> Tree { return Tree(key: key, value: value, children: children) }
 }
 
 extension Tree {
@@ -46,34 +29,28 @@ extension Tree {
 
 struct TreeMod<T> {
     let path: [Key]
-    let tree: Tree<T>
+    let value: T
+    let added: [Tree<T>]
+    let removed: [Key]
 }
 
 extension TreeMod: Equatable where T: EasyEquatable {
     static func == (lhs: TreeMod, rhs: TreeMod) -> Bool {
-        return lhs.path == rhs.path && lhs.tree == rhs.tree
+        return lhs.path == rhs.path && lhs.value.equality == rhs.value.equality && lhs.added == rhs.added && lhs.removed == rhs.removed
     }
 }
 
 extension TreeMod {
-    func droppedPath() -> TreeMod {
-        return TreeMod(path: Array(path.dropFirst()), tree: tree)
-    }
-}
-
-protocol Keyed {
-    var key: Key { get }
+    func droppedPath() -> TreeMod { return TreeMod(path: Array(path.dropFirst()), value: value, added: added, removed: removed) }
 }
 
 extension Tree: DebugLoggable where T: DebugLoggable {
     
-    var debugLog: String {
-        return log()
-    }
+    var debugLog: String { return log() }
     
     func log(depth: Int = 0) -> String {
         let spacing = String(repeating: " ", count: depth * 4)
-        var s = spacing + "\(key) - \(value.debugLog)"
+        var s = spacing + "\(key) - \(value.debugLog)\n"
         for c in children {
             s = s + c.log(depth: depth + 1)
         }
@@ -89,9 +66,4 @@ extension Tree {
     }
 }
 
-extension Element {
-    
-    func rendered(with values: [T]) -> Element {
-        return Element(name: name, equality: equality, cache: render(values), render: render)
-    }
-}
+

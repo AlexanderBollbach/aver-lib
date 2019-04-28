@@ -68,45 +68,41 @@ class ResolvingTests: XCTestCase {
 //
 //    }
 //
-    func testResolve3() {
-
-        let diff = Diffing<Element<String>>().standard
-        let resolve = Resolving<String>().standard
-        
-        let md = MarkDownElements()
-        
-        let trees = [
-            md.doc() -- [
-                md.list() -- [
-                    md.text("1")-
-                ],
-                md.text("foo")-
-            ],
-            md.doc() -- [
-                md.list() -- [
-                    md.text("1")-,
-                    md.text("2")-
-                ],
-                md.text("foo")-
-            ],
-        ]
-        
-        let mods = diff(trees[0], trees[1])
-        
-        // check mods
-        let newTree = md.list() -- [md.text("1")-, md.text("2")-]
-        let expected = TreeMod(path: ["0"], tree: newTree)
-        XCTAssert(mods.first == expected)
-        
-        let initialTree = trees[0]
-        var finalTree = trees[1]
-        
-        let result = resolve(initialTree, mods)
-        XCTAssert(result == finalTree)
-        
-        finalTree.render()
-        
-        print(finalTree.debugLog)
-        
-    }
+//    func testResolve3() {
+//
+//        let diff = Diffing<Element<String>>().standard
+//        let resolve = Resolving<String>().standard
+//        
+//        let md = MarkDownElements()
+//        
+//        let initialTree = md.doc() -- [
+//            md.list() -- [
+//                md.text("1")-
+//            ],
+//            md.text("foo")-
+//        ]
+//        
+//        let updatedTree = md.doc() -- [
+//            md.list() -- [
+//                md.text("1")-,
+//                md.text("2")-
+//            ],
+//            md.text("foo")-
+//        ]
+//        
+//        let mods = diff(initialTree, updatedTree)
+//        
+//        // check mods
+//        let newTree = md.list() -- [md.text("1")-, md.text("2")-]
+//        let expected = TreeMod(path: ["0"], tree: newTree)
+//        XCTAssert(mods.first == expected)
+//        
+//        let result = resolve(initialTree, mods)
+//        XCTAssert(result == updatedTree)
+//        
+////        updatedTree.render()
+//        
+//        print(updatedTree.debugLog)
+//        
+//    }
 }

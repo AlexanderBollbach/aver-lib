@@ -1,13 +1,5 @@
 import Foundation
 
-protocol EasyEquatable {
-    var equality: String { get }
-}
-
-protocol DebugLoggable {
-    var debugLog: String { get }
-}
-
 struct Element<T>: EasyEquatable {
     let name: String
     let equality: String
@@ -29,12 +21,11 @@ extension Element: DebugLoggable {
 }
 
 extension Element {
-    func rendered(values: [T]) -> Element {
-        return Element(name: name, equality: equality, cache: self.render(values), render: self.render)
+    func rendered(with values: [T]) -> Element {
+        return Element(name: name, equality: equality, cache: render(values), render: render)
     }
     
     func clearedCache() -> Element {
         return Element(name: name, equality: equality, cache: nil, render: render)
     }
 }
-
