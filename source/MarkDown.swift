@@ -16,5 +16,13 @@ extension Element where T == String {
     static func doc() -> Element {
         return Element(name: "doc") { $0.joined(separator: "\n") }
     }
+    
+    static func header(_ title: String) -> Element {
+        return Element(name: "header", equality: title) { _ in "# \(title)" }
+    }
+    
+    static func divider() -> Element {
+        return Element(name: "divider") { _ in "---" }
+    }
 }
 
