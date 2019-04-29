@@ -1,46 +1,50 @@
 import XCTest
 @testable import AverLib
 
+func diff<U>(old: Tree<Element<U>>, new: Tree<Element<U>>) -> [TreeMod<Element<U>>] {
+    return old.diff(with: new)
+}
+
 class DiffingTests: XCTestCase {
+    
+    let doc = MarkDownElements().doc
+    let list = MarkDownElements().list
+    let newLine = MarkDownElements().newLine()
+    let text = MarkDownElements().text
     
     func test_diff1() {
         
-        let diff = Diffing<Element<String>>().standard
-        let md = MarkDownElements.init()
+        let md = MarkDownElements()
         
-        let initialTree = md.doc() -- [
-            md.list() -- [
-                md.text("1")-
+        let mods = diff(
+            old: doc() -- [
+                list() -- [
+                    text("1")-
+                ],
+                text("still-cached")-
             ],
-            md.text("still-cached")-
-        ]
+            new: doc() -- [
+                list() -- [
+                    text("1")-,
+                    text("added")-
+                ],
+                text("still-cached")-
+            ]
+        )
         
-        let updatedTree = md.doc() -- [
-            md.list() -- [
-                md.text("1")-,
-                md.text("added")-
-            ],
-            md.text("still-cached")-
-        ]
-        
-        let mods = diff(initialTree, updatedTree)
-        
-        XCTAssert(mods.count == 1)
-        
-        let expectedMod = TreeMod(
+        let em = TreeMod(
             path: ["0"],
             value: md.list(),
             added: [(md.text("added")-).withKey(key: "1")],
             removed: []
         )
         
-        XCTAssert(mods.first == expectedMod)
+        XCTAssert(mods == [em])
     }
     
     func test_diff2() {
         
-        let diff = Diffing<Element<String>>().standard
-        let md = MarkDownElements.init()
+        let md = MarkDownElements()
         
         let initialTree = md.doc() -- [
             md.list() -- [
@@ -57,7 +61,7 @@ class DiffingTests: XCTestCase {
             md.text("1-CHANGED")-
         ]
         
-        let mods = diff(initialTree, updatedTree)
+        let mods = initialTree.diff(with: updatedTree)
         
         let mod1 = TreeMod(
             path: ["0"],
@@ -76,126 +80,111 @@ class DiffingTests: XCTestCase {
         XCTAssert(mods == [mod1, mod2])
     }
     
-    func test_diff4() {
+    func test_diff3() {
         
-        let diff = Diffing<Element<String>>().standard
-        let resolve = Resolving<String>().standard
         let md = MarkDownElements.init()
         
         let initialTree = md.doc() -- [
-            md.list() -- [
-                md.text("1")-
-            ],
-            md.text("still-cached")-
+            md.text("1")-,
+            md.text("2")-
         ]
-
+        
         let updatedTree = md.doc() -- [
-            md.list() -- [
-                md.text("1")-,
-                md.text("added")-
-            ],
-            md.text("still-cached")-
+            md.newLine()-
         ]
         
-        let mods = diff(initialTree, updatedTree)
+        let mods = initialTree.diff(with: updatedTree)
         
-        let r = resolve(initialTree, mods)
+        let mod1 = TreeMod(
+            path: [],
+            value: md.doc(),
+            added: [md.newLine()-],
+            removed: ["0", "1"]
+        )
         
-        print(updatedTree.log())
-        print(r.log())
-        
-        XCTAssert(updatedTree == r)
+        XCTAssert(mods.first == mod1)
     }
-
-//    func test_diff1() {
-//        
-//        let diff = Diffing<Element<String>>().standard
-//        
-//        let md = MarkDownElements()
-//        
-//        let t1: Tree<Element<String>> = {
-//            md.doc() -- [
-//                md.text("l1")-
-//            ]
-//        }()
-//        
-//        let t2: Tree<Element<String>> = {
-//            md.doc() -- [
-//                md.text("l1-changed")-
-//            ]
-//        }()
-//        
-//        let mods = diff(t1, t2)
-//        
-//        XCTAssert(mods.count == 1)
-//    }
-//    
-//    func test_diffNone() {
-//        
-//        let diff = Diffing<Element<String>>().standard
-//        
-//        let md = MarkDownElements()
-//        
-//        let oldList = md.list() -- [
-//            md.text("l1")-,
-//            md.text("l2")-
-//        ]
-//        
-//        let t1: Tree<Element<String>> = {
-//            md.doc() -- [
-//                md.text("2")-,
-//                oldList
-//            ]
-//        }()
-//        
-//        let t2: Tree<Element<String>> = {
-//            md.doc() -- [
-//                md.text("2")-,
-//                oldList
-//            ]
-//        }()
-//
-//        XCTAssert(diff(t1, t2).isEmpty)
-//    }
-//    
-//    func test_diffTwo() {
-//        
-//        let diff = Diffing<Element<String>>().standard
-//        
-//        let md = MarkDownElements()
-//        
-//        let l1 = md.list() -- [
-//            md.text("l1")-
-//        ]
-//        
-//        let l2 = md.list() -- [
-//            md.text("l2")-
-//        ]
-//        
-//        let l1_changed = md.list() -- [
-//            md.text("l1-changed")-
-//        ]
-//        
-//        let l2_changed = md.list() -- [
-//            md.text("l2-changed")-
-//        ]
-//       
-//        let t1: Tree<Element<String>> = {
-//            md.doc() -- [
-//                l1,
-//                l2
-//            ]
-//        }()
-//        
-//        let t2: Tree<Element<String>> = {
-//            md.doc() -- [
-//                l1_changed,
-//                l2_changed
-//            ]
-//        }()
-//        
-//        let mods = diff(t1, t2)
-//        
-//        XCTAssert(mods.count == 2)
-//    }
+    
+    func test_diff4() {
+        
+        let md = MarkDownElements.init()
+        
+        let initialTree = md.doc() -- [
+            md.text("1")-,
+            md.text("2")-
+        ]
+        
+        let updatedTree = md.doc() -- [
+            md.text("1")-
+        ]
+        
+        let mods = initialTree.diff(with: updatedTree)
+        
+        let mod1 = TreeMod(
+            path: [],
+            value: md.doc(),
+            added: [],
+            removed: ["1"]
+        )
+        
+        XCTAssert(mods.first == mod1)
+    }
+    
+    func test_diff5() {
+        
+        let mods = diff(
+            old: doc() -- [
+                text("l1")-
+            ],
+            new: doc() -- [
+                text("l1-changed")-
+            ]
+        )
+        
+        let em = TreeMod(path: ["0"], value: text("l1-changed"), added: [], removed: [])
+        
+        XCTAssert(mods == [em])
+    }
+    
+    func test_diffNone() {
+        
+        let mods = diff(
+            old: list()-,
+            new: list()-
+        )
+        
+        XCTAssert(mods.isEmpty)
+    }
+    
+    func test_diffTwo() {
+        
+        let l1 = list() -- [
+            text("l1")-
+        ]
+        
+        let l2 = list() -- [
+            text("l2")-
+        ]
+        
+        let l1_changed = list() -- [
+            text("l1-changed")-
+        ]
+        
+        let l2_changed = list() -- [
+            text("l2-changed")-
+        ]
+        
+        let mods = diff(
+            old: doc() -- [
+                l1,
+                l2
+            ],
+            new: doc() -- [
+                l1_changed,
+                l2_changed
+            ]
+        )
+        
+        XCTAssert(mods.count == 2)
+    }
 }

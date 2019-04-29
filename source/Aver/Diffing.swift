@@ -1,52 +1,71 @@
 import Foundation
 
-typealias DiffFunction<T: EasyEquatable> = (_ old: Tree<T>, _ new: Tree<T>) -> [TreeMod<T>]
-
-private func _diffStandard<T: EasyEquatable>(old: Tree<T>, new: Tree<T>, path: [Key]) -> [TreeMod<T>] {
+extension Tree {
     
-    let old_new: [(Tree<T>, Tree<T>)] = new.children.compactMap { new in
-        if let foundOld = old.children.first(where: { $0.key == new.key }) {
-            return (foundOld, new)
-        } else {
-            return nil
-        }
+    // if the key is the same, and the name ("type") is the same, it is only rerendered not replaced
+    func isEquivalent<U>(with tree: Tree) -> Bool
+        where T == AverLib.Element<U> {
+            
+            return self.key == tree.key && self.value.name == tree.value.name
     }
     
-    let oldKeys = old.children.map { $0.key }
-    let newKeys = new.children.map { $0.key }
+    func contains<U>(new: Tree) -> Bool
+        where T == AverLib.Element<U> {
+            
+            return children.contains(where: { $0.isEquivalent(with: new) })
+    }
     
-    let added = new.children.filter { !oldKeys.contains($0.key) }
-    let removed = old.children.filter { !newKeys.contains($0.key) }
+    func added<U>(from old: Tree) -> [Tree]
+        where T == AverLib.Element<U> {
+
+            return children.filter { !old.contains(new: $0) }
+    }
     
-    let entityChanged = old.value.equality != new.value.equality
-    let addedChildren = !added.isEmpty
-    let removedChildren = !removed.isEmpty
-   
-    if entityChanged || addedChildren || removedChildren {
-        return [
-            TreeMod<T>(
+    func removed<U>(from old: Tree) -> [Tree]
+        where T == AverLib.Element<U> {
+            
+            return old.children.filter { !self.contains(new: $0) }
+    }
+    
+    func unchanged<U>(from old: Tree) -> [(Tree, Tree)]
+        where T == AverLib.Element<U> {
+            
+            return children.compactMap { child in
+                if let o = old.children.first(where: { $0.isEquivalent(with: child) }) {
+                    return (o, child)
+                } else {
+                    return nil
+                }
+            }
+    }
+}
+
+extension Tree {
+    
+    func diff<U>(with new: Tree, path: [Key] = []) -> [TreeMod<T>] where T == Element<U> {
+        
+        let added = new.added(from: self)
+        let removed = new.removed(from: self)
+        let unchanged = new.unchanged(from: self)
+        
+        let entityChanged = value.equality != new.value.equality || value.name != new.value.name
+        
+        var mods = [TreeMod<T>]()
+        
+        if entityChanged || !added.isEmpty || !removed.isEmpty {
+            mods.append(TreeMod<T>(
                 path: path,
                 value: new.value,
                 added: added,
                 removed: removed.map { $0.key}
-            )
-        ]
-    }
-    
-    var mods = [TreeMod<T>]()
-    
-    for o_n in old_new {
-        mods.append(contentsOf: _diffStandard(old: o_n.0, new: o_n.1, path: path + [o_n.1.key]))
-    }
-
-    return mods
-}
-
-struct Diffing<T: EasyEquatable> {
-    
-    var standard: DiffFunction<T> = { old, new in
-        return _diffStandard(old: old, new: new, path: [])
+            ))
+        }
+        
+        for (old, new) in unchanged {
+            mods.append(contentsOf: old.diff(with: new, path: path + [new.key]))
+        }
+        
+        return mods
     }
 }
-
 

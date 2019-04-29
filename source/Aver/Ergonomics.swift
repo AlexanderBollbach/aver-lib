@@ -3,7 +3,7 @@ import Foundation
 postfix operator -
 
 postfix func - <T>(element: Element<T>) -> Tree<Element<T>> {
-    return Tree(key: "1", value: element, children: [])
+    return Tree(key: "0", value: element, children: [])
 }
 
 

@@ -19,13 +19,3 @@ extension Element: DebugLoggable {
         return "\(name) \(cache != nil ? "(CACHED)" : "")"
     }
 }
-
-extension Element {
-    func rendered(with values: [T]) -> Element {
-        return Element(name: name, equality: equality, cache: render(values), render: render)
-    }
-    
-    func clearedCache() -> Element {
-        return Element(name: name, equality: equality, cache: nil, render: render)
-    }
-}
