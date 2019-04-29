@@ -11,6 +11,7 @@
 		29039B402274ABBF000B7D38 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29039B3F2274ABBF000B7D38 /* Types.swift */; };
 		29039B4222767545000B7D38 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29039B4122767545000B7D38 /* Rendering.swift */; };
 		29039B4622768092000B7D38 /* AverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29039B4522768092000B7D38 /* AverTests.swift */; };
+		29039B482276821C000B7D38 /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29039B472276821C000B7D38 /* TreeTests.swift */; };
 		294E134D225DB27E000301AA /* MarkDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294E134C225DB27E000301AA /* MarkDown.swift */; };
 		298439A7224EF802001ED9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298439A6224EF802001ED9BA /* AppDelegate.swift */; };
 		29A677522266EAA900FC55F1 /* Aver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A6774D2266CF4200FC55F1 /* Aver.swift */; };
@@ -38,6 +39,7 @@
 		29039B3F2274ABBF000B7D38 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		29039B4122767545000B7D38 /* Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 		29039B4522768092000B7D38 /* AverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverTests.swift; sourceTree = "<group>"; };
+		29039B472276821C000B7D38 /* TreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		294E1346225DB244000301AA /* Resolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolving.swift; sourceTree = "<group>"; };
 		294E1348225DB25F000301AA /* Diffing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diffing.swift; sourceTree = "<group>"; };
 		294E134A225DB26C000301AA /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				2F5C0FEF2270B2B900B538BE /* DiffingTests.swift */,
 				2F5C0FFB2270BEC800B538BE /* ResolvingTests.swift */,
 				29039B3D2272CFE7000B7D38 /* RenderingTests.swift */,
+				29039B472276821C000B7D38 /* TreeTests.swift */,
 				2F5C0FF12270B2B900B538BE /* Info.plist */,
 			);
 			path = AverLibTests;
@@ -245,6 +248,7 @@
 			files = (
 				2F5C0FF02270B2B900B538BE /* DiffingTests.swift in Sources */,
 				2F5C0FFC2270BEC800B538BE /* ResolvingTests.swift in Sources */,
+				29039B482276821C000B7D38 /* TreeTests.swift in Sources */,
 				29039B3E2272CFE7000B7D38 /* RenderingTests.swift in Sources */,
 				29039B4622768092000B7D38 /* AverTests.swift in Sources */,
 			);

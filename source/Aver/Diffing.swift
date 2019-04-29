@@ -5,37 +5,28 @@ extension Tree {
     // if the key is the same, and the name ("type") is the same, it is only rerendered not replaced
     func isEquivalent<U>(with tree: Tree) -> Bool
         where T == AverLib.Element<U> {
-            
             return self.key == tree.key && self.value.name == tree.value.name
     }
     
     func contains<U>(new: Tree) -> Bool
         where T == AverLib.Element<U> {
-            
             return children.contains(where: { $0.isEquivalent(with: new) })
     }
     
     func added<U>(from old: Tree) -> [Tree]
         where T == AverLib.Element<U> {
-
             return children.filter { !old.contains(new: $0) }
     }
     
     func removed<U>(from old: Tree) -> [Tree]
         where T == AverLib.Element<U> {
-            
             return old.children.filter { !self.contains(new: $0) }
     }
     
     func unchanged<U>(from old: Tree) -> [(Tree, Tree)]
         where T == AverLib.Element<U> {
-            
             return children.compactMap { child in
-                if let o = old.children.first(where: { $0.isEquivalent(with: child) }) {
-                    return (o, child)
-                } else {
-                    return nil
-                }
+                old.children.first(where: { $0.isEquivalent(with: child) }).map { ($0, child) }
             }
     }
 }

@@ -3,19 +3,14 @@ import XCTest
 
 class ResolvingTests: XCTestCase {
     
-    let doc = MarkDownElements().doc
-    let list = MarkDownElements().list
-    let newLine = MarkDownElements().newLine()
-    let text = MarkDownElements().text
-    
     func testResolve1() {
         
-        let old = doc() -- [
-            text("2")-
+        let old: Tree<Element<String>> = .doc() -- [
+            .text("2")-
         ]
         
-        let new = doc() -- [
-            text("2-changed")-
+        let new: Tree<Element<String>> = .doc() -- [
+            .text("2-changed")-
         ]
 
         let mods = diff(old: old, new: new)
@@ -28,15 +23,15 @@ class ResolvingTests: XCTestCase {
 
     func testResolve2() {
         
-        let old = doc() -- [
-            text("2")-
+        let old: Tree<Element<String>> = .doc() -- [
+            .text("2")-
         ]
         
-        let new = doc()-
+        let new: Tree<Element<String>> = .doc()-
         
         let mods = old.diff(with: new)
 
-        XCTAssert(mods == [TreeMod(path: [], value: doc(), added: [], removed: ["0"])])
+        XCTAssert(mods == [TreeMod(path: [], value: .doc(), added: [], removed: ["0"])])
         
         let r = old.resolve(mods: mods)
 
@@ -45,19 +40,19 @@ class ResolvingTests: XCTestCase {
 
     func testResolve3() {
 
-        let old = doc() -- [
-            list() -- [
-                text("1")-
+        let old: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("1")-
             ],
-            text("foo")-
+            .text("foo")-
         ]
         
-        let new = doc() -- [
-            list() -- [
-                text("1")-,
-                text("2")-
+        let new: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("1")-,
+                .text("2")-
             ],
-            text("foo")-
+            .text("foo")-
         ]
         
         XCTAssert(new == old.resolve(mods: old.diff(with: new)))

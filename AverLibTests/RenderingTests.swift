@@ -2,16 +2,11 @@ import XCTest
 @testable import AverLib
 
 class RenderingTests: XCTestCase {
-    
-    let doc = MarkDownElements().doc
-    let list = MarkDownElements().list
-    let newLine = MarkDownElements().newLine()
-    let text = MarkDownElements().text
-    
+   
     func test1() {
 
-        var t1 = doc() -- [
-            text("1")-
+        var t1: Tree<Element<String>> = .doc() -- [
+            .text("1")-
         ]
         
         XCTAssert(t1.value.cache == nil)
@@ -23,12 +18,12 @@ class RenderingTests: XCTestCase {
     
     func test2() {
         
-        var t1 = doc() -- [
-            list() -- [
-                text("1")-,
-                text("2")-
+        var t1: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("1")-,
+                .text("2")-
             ],
-            text("1")-
+            .text("1")-
         ]
         
         XCTAssert(t1.value.cache == nil)
@@ -37,11 +32,11 @@ class RenderingTests: XCTestCase {
         
         XCTAssert(t1.value.cache == "- 1\n- 2\n1")
         
-        let t2 = doc() -- [
-            list() -- [
-                text("3")-
+        let t2: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("3")-
             ],
-            text("1")-
+            .text("1")-
         ]
         
         t1 = t1.resolve(mods: t1.diff(with: t2))
@@ -57,24 +52,24 @@ class RenderingTests: XCTestCase {
     
     func testResolve3() {
     
-        var old = doc() -- [
-            list() -- [
-                text("1")-,
-                list() -- [
-                    text("l1")-
+        var old: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("1")-,
+                .list() -- [
+                    .text("l1")-
                 ]
             ],
-            text("text")-
+            .text("text")-
         ]
 
-        let new = doc() -- [
-            list() -- [
-                text("1")-,
-                list() -- [
-                    text("l1-changed")-
+        let new: Tree<Element<String>> = .doc() -- [
+            .list() -- [
+                .text("1")-,
+                .list() -- [
+                    .text("l1-changed")-
                 ]
             ],
-            text("text")-
+            .text("text")-
         ]
         
         XCTAssert(old.value.cache == nil)
