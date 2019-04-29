@@ -25,7 +25,7 @@ class AverTests: XCTestCase {
             text("quz")-
         ]
         
-        XCTAssert(aver.render(tr) == - foo\n- bar\n\n\nquz)
+        XCTAssert(aver.render(tr) == "- foo\n- bar\n\n\nquz")
     }
 
 }
