@@ -17,12 +17,25 @@ extension Element where T == String {
         return Element(name: "doc") { $0.joined(separator: "\n") }
     }
     
-    static func header(_ title: String) -> Element {
-        return Element(name: "header", equality: title) { _ in "# \(title)" }
+    static func header(_ title: String, level: Int = 1) -> Element {
+        if level > 4 { fatalError() }
+        return Element(name: "header", equality: title) { _ in "\(String.init(repeating: "#", count: level)) \(title)" }
     }
     
     static func divider() -> Element {
         return Element(name: "divider") { _ in "---" }
+    }
+    
+    static func blockQuoted() -> Element {
+        return Element(name: "blockQuoted") { $0.map { "> \($0)\n" }.joined() }
+    }
+    
+    static func codeBlock() -> Element {
+        return Element(name: "codeBlock") { "```\n\($0.joined())\n```" }
+    }
+    
+    static func horizontal() -> Element {
+        return Element(name: "horizontal") { _ in "<hr />" }
     }
 }
 
