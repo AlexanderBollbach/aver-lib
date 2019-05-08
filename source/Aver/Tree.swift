@@ -48,13 +48,27 @@ extension Tree: DebugLoggable where T: DebugLoggable {
     
     var debugLog: String { return log() }
     
-    func log(depth: Int = 0) -> String {
+    func log(depth: Int = 0, siblingSize: Int = Int.max, maxDepth: Int = Int.max) -> String {
+        
         let spacing = String(repeating: " ", count: depth * 4)
-        var s = spacing + "\(key) - \(value.debugLog)\n"
-        for c in children {
-            s = s + c.log(depth: depth + 1)
+        
+        var finalString = spacing + "\(key) - \(value.debugLog)\n"
+        
+        if depth > maxDepth {
+            return finalString
         }
-        return s
+        
+        for child in children.enumerated() where child.offset < siblingSize + 1 {
+            
+            finalString += child.element.log(depth: depth + 1, siblingSize: siblingSize, maxDepth: maxDepth)
+            
+            if child.offset == siblingSize {
+                let spacing = String(repeating: " ", count: (depth + 1) * 4)
+                finalString.append(spacing + "...more" + "\n")
+            }
+        }
+
+        return finalString
     }
 }
 

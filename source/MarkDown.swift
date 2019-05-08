@@ -1,6 +1,7 @@
 import Foundation
 
 extension Element where T == String {
+    
     static func newLine() -> Element {
         return Element(name: "newLine", render: { _ in return "\n" })
     }
@@ -42,4 +43,11 @@ extension Element where T == String {
         return Element(name: "link", equality: "\(url)\(text)") { _ in "[\(text)](\(url))" }
     }
 }
+
+//extension Tree where T == Element<String> {
+//    func newLines() -> Tree<Element<String>> {
+//        zip(self.children, <#T##sequence2: Sequence##Sequence#>)
+//        return self.with(children: self.children)
+//    }
+//}
 
